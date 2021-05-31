@@ -12,20 +12,35 @@
   </head>
   <body>
     <div class="Game" id="Game">
-      <h3 id="money">Money: </h3>
+      <h3 id="money">Money: <span id="currentmoney"></span></h3>
       <h3 id="humandispatchers" >Human Dispatchers: </h3>
       <div class="">
-      <button type="button" id="dispatcherButton" name="dispatcherButton">Buy Human Dispatcher</button>
+        <button type="button" id="flyButton" name="flyButton">Fly</button>
+        <button type="button" id="dispatcherButton" name="dispatcherButton">Buy Human Dispatcher</button>
       </div>
     </div>
   </body>
   <script type="text/javascript">
     let money = 1;
     let humanDispatchers = 0;
-    document.getElementById('money').innerHTML = money;
+    let humanDispatcherCost = 20;
+    let currentMoney;
+
+    // Main Loop
     window.setInterval(function () {
-      document.getElementById('money').innerHTML = "Money: " + (money += money * 1/1000);
+      currentMoney = document.getElementById('currentmoney');
+      currentMoney.textContent = money += humanDispatchers * 1/1000;
+      if ()
       document.getElementById('humandispatchers').innerHTML = "Human Dispatchers: " + humanDispatchers;
     }, 10);
+    // End Main loop
+
+    document.getElementById("dispatcherButton").addEventListener("click", function() {
+      humanDispatchers++;
+    });
+    document.getElementById("flyButton").addEventListener("click", function() {
+      money++;
+    });
+    //"Money: " + (money += money * 1/1000)
   </script>
 </html>

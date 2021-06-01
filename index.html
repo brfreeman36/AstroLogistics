@@ -16,30 +16,43 @@
       <h3 id="humandispatchers" >Human Dispatchers: </h3>
       <div class="">
         <button type="button" id="flyButton" name="flyButton">Fly</button>
-        <button type="button" id="dispatcherButton" name="dispatcherButton">Buy Human Dispatcher</button>
+        <button type="button" id="dispatcherButton" name="dispatcherButton" title="" >Buy Human Dispatcher</button>
       </div>
     </div>
   </body>
   <script type="text/javascript">
-    let money = 1;
+    let money = 0;
     let humanDispatchers = 0;
     let humanDispatcherCost = 20;
     let currentMoney;
+    let moneyRounded;
+    document.getElementById("dispatcherButton").title = "Cost: " + humanDispatcherCost;
 
     // Main Loop
     window.setInterval(function () {
+      money += humanDispatchers * 1/1000;
+      moneyDisplay = Math.floor(money);
+      document.getElementById('dispatcherButton').disabled = (money < humanDispatcherCost) ? true : false;
       currentMoney = document.getElementById('currentmoney');
-      currentMoney.textContent = money += humanDispatchers * 1/1000;
+      currentMoney.textContent = moneyDisplay;
       document.getElementById('humandispatchers').innerHTML = "Human Dispatchers: " + humanDispatchers;
     }, 10);
     // End Main loop
 
+    // Dispatcher button click
     document.getElementById("dispatcherButton").addEventListener("click", function() {
+      if (money >= humanDispatcherCost) {
       humanDispatchers++;
+      money -= humanDispatcherCost;
+      humanDispatcherCost *= 1.1;
+      humanDispatcherCostDisplay = Math.floor(humanDispatcherCost)
+      document.getElementById("dispatcherButton").title = "Cost: " + humanDispatcherCostDisplay;
+      }
     });
+    // Fly button click
     document.getElementById("flyButton").addEventListener("click", function() {
       money++;
     });
-    //"Money: " + (money += money * 1/1000)
+
   </script>
 </html>

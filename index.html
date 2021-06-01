@@ -14,7 +14,7 @@
     <div class="Game" id="Game">
       <h3 id="money">Money: <span id="currentmoney"></span></h3>
       <h3 id="humanpilots" >Human Pilots: <span id="currentPilots"></span></h3>
-      <div class="">
+      <div class="" id="buttonContainer">
         <button type="button" id="flyButton" name="flyButton">Fly</button>
         <button type="button" id="humanPilotButton" name="humanPilotButton" title="" >Buy Human Pilot</button>
       </div>
@@ -24,6 +24,7 @@
     let money = 0;
     let humanPilots = 0;
     let humanPilotCost = 20;
+    let humanDispatcherCost = 50;
     let currentMoney;
     let moneyRounded;
     document.getElementById("humanPilotButton").title = "Cost: " + humanPilotCost;
@@ -48,11 +49,20 @@
       humanPilotCostDisplay = Math.floor(humanPilotCost)
       document.getElementById("humanPilotButton").title = "Cost: " + humanPilotCostDisplay;
       document.getElementById('currentPilots').innerHTML = humanPilots;
+      checkCreateHumanDispatcher();
       }
     });
     // Fly button click
     document.getElementById("flyButton").addEventListener("click", function() {
       money++;
     });
+    function checkCreateHumanDispatcher() {
+      if (humanPilots >= 1 && document.getElementById('humandispatcherbutton') == null) {
+        let createHumanDispatcherButton = document.createElement("BUTTON");
+        createHumanDispatcherButton.innerHTML = "Buy Human Dispatcher";
+        createHumanDispatcherButton.id = "humandispatcherbutton";
+        document.getElementById('buttonContainer').appendChild(createHumanDispatcherButton);
+      }
+    };
   </script>
 </html>

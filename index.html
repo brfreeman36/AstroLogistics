@@ -13,40 +13,41 @@
   <body>
     <div class="Game" id="Game">
       <h3 id="money">Money: <span id="currentmoney"></span></h3>
-      <h3 id="humandispatchers" >Human Dispatchers: </h3>
+      <h3 id="humanpilots" >Human Pilots: <span id="currentPilots"></span></h3>
       <div class="">
         <button type="button" id="flyButton" name="flyButton">Fly</button>
-        <button type="button" id="dispatcherButton" name="dispatcherButton" title="" >Buy Human Dispatcher</button>
+        <button type="button" id="humanPilotButton" name="humanPilotButton" title="" >Buy Human Pilot</button>
       </div>
     </div>
   </body>
   <script type="text/javascript">
     let money = 0;
-    let humanDispatchers = 0;
-    let humanDispatcherCost = 20;
+    let humanPilots = 0;
+    let humanPilotCost = 20;
     let currentMoney;
     let moneyRounded;
-    document.getElementById("dispatcherButton").title = "Cost: " + humanDispatcherCost;
+    document.getElementById("humanPilotButton").title = "Cost: " + humanPilotCost;
+    document.getElementById('currentPilots').innerHTML = humanPilots;
 
     // Main Loop
     window.setInterval(function () {
-      money += humanDispatchers * 1/1000;
+      money += humanPilots * 1/1000;
       moneyDisplay = Math.floor(money);
-      document.getElementById('dispatcherButton').disabled = (money < humanDispatcherCost) ? true : false;
+      document.getElementById('humanPilotButton').disabled = (money < humanPilotCost) ? true : false;
       currentMoney = document.getElementById('currentmoney');
       currentMoney.textContent = moneyDisplay;
-      document.getElementById('humandispatchers').innerHTML = "Human Dispatchers: " + humanDispatchers;
     }, 10);
     // End Main loop
 
-    // Dispatcher button click
-    document.getElementById("dispatcherButton").addEventListener("click", function() {
-      if (money >= humanDispatcherCost) {
-      humanDispatchers++;
-      money -= humanDispatcherCost;
-      humanDispatcherCost *= 1.1;
-      humanDispatcherCostDisplay = Math.floor(humanDispatcherCost)
-      document.getElementById("dispatcherButton").title = "Cost: " + humanDispatcherCostDisplay;
+    // Human Pilot button click
+    document.getElementById("humanPilotButton").addEventListener("click", function() {
+      if (money >= humanPilotCost) {
+      humanPilots++;
+      money -= humanPilotCost;
+      humanPilotCost *= 1.1;
+      humanPilotCostDisplay = Math.floor(humanPilotCost)
+      document.getElementById("humanPilotButton").title = "Cost: " + humanPilotCostDisplay;
+      document.getElementById('currentPilots').innerHTML = humanPilots;
       }
     });
     // Fly button click

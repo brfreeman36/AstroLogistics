@@ -21,11 +21,10 @@
       <h1>AstroLogistics</h1>
       <div class="" id="itemcounts">
         <h3 id="money">Money: <span id="currentmoney"></span></h3>
-        <h3 id="humanpilots" >Human Pilots: <span id="currentPilots"></span></h3>
+
       </div>
       <div class="" id="buttonContainer">
         <button type="button" id="flyButton" name="flyButton">Fly</button>
-        <button type="button" id="humanPilotButton" name="humanPilotButton" title="" >Buy Human Pilot</button>
       </div>
     </div>
   </body>
@@ -37,14 +36,14 @@
     let humanDispatcherCost = 50;
     let currentMoney;
     let moneyRounded;
-    document.getElementById("humanPilotButton").title = "Cost: " + humanPilotCost;
-    document.getElementById('currentPilots').innerHTML = humanPilots;
 
     // Main Loop
     window.setInterval(function () {
       money += humanPilots * 1/1000;
       moneyDisplay = Math.floor(money);
-      document.getElementById('humanPilotButton').disabled = (money < humanPilotCost) ? true : false;
+      if (document.getElementById('humanpilotbutton')) {
+        document.getElementById('humanpilotbutton').disabled = (money < humanPilotCost) ? true : false;
+      }
       currentMoney = document.getElementById('currentmoney');
       currentMoney.textContent = moneyDisplay;
       checkCreateHumanPilotButton();
@@ -73,7 +72,7 @@
       }
     };
     function checkCreateHumanDispatcher() {
-      if (humanPilots >= 1 && document.getElementById('humandispatcherbutton') == null) {
+      if (humanPilots >= 3 && document.getElementById('humandispatcherbutton') == null) {
         let createHumanDispatcherButton = document.createElement("BUTTON");
         createHumanDispatcherButton.innerHTML = "Buy Human Dispatcher";
         createHumanDispatcherButton.type = "button";
@@ -94,9 +93,8 @@
         money -= humanPilotCost;
         humanPilotCost *= 1.1;
         humanPilotCostDisplay = Math.floor(humanPilotCost);
-        document.getElementById("humanPilotButton").title = "Cost: " + humanPilotCostDisplay;
-        document.getElementById('currentPilots').innerHTML = humanPilots;
-        document.getElementById('displayeddispatchers').innerHTML = humanPilots;
+        document.getElementById("humanpilotbutton").title = "Cost: " + humanPilotCostDisplay;
+        document.getElementById('displayedpilots').innerHTML = humanPilots;
         checkCreateHumanDispatcher();
       }
     })

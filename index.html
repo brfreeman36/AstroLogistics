@@ -4,16 +4,25 @@
     <meta charset="utf-8">
     <title></title>
     <style media="screen">
+      body {
+        background-color: #5A5A5A;
+        color:white;
+      }
       button {
         margin:10px 10px 10px 0px;
         padding:1px 40px 1px 40px;
+        border-radius: 5px;
+        background-color:
       }
     </style>
   </head>
   <body>
     <div class="Game" id="Game">
-      <h3 id="money">Money: <span id="currentmoney"></span></h3>
-      <h3 id="humanpilots" >Human Pilots: <span id="currentPilots"></span></h3>
+      <h1>AstroLogistics</h1>
+      <div class="" id="itemcounts">
+        <h3 id="money">Money: <span id="currentmoney"></span></h3>
+        <h3 id="humanpilots" >Human Pilots: <span id="currentPilots"></span></h3>
+      </div>
       <div class="" id="buttonContainer">
         <button type="button" id="flyButton" name="flyButton">Fly</button>
         <button type="button" id="humanPilotButton" name="humanPilotButton" title="" >Buy Human Pilot</button>
@@ -24,6 +33,7 @@
     let money = 0;
     let humanPilots = 0;
     let humanPilotCost = 20;
+    let humanDispatchers = 0;
     let humanDispatcherCost = 50;
     let currentMoney;
     let moneyRounded;
@@ -37,32 +47,65 @@
       document.getElementById('humanPilotButton').disabled = (money < humanPilotCost) ? true : false;
       currentMoney = document.getElementById('currentmoney');
       currentMoney.textContent = moneyDisplay;
+      checkCreateHumanPilotButton();
     }, 10);
     // End Main loop
 
-    // Human Pilot button click
-    document.getElementById("humanPilotButton").addEventListener("click", function() {
-      if (money >= humanPilotCost) {
-      humanPilots++;
-      money -= humanPilotCost;
-      humanPilotCost *= 1.1;
-      humanPilotCostDisplay = Math.floor(humanPilotCost)
-      document.getElementById("humanPilotButton").title = "Cost: " + humanPilotCostDisplay;
-      document.getElementById('currentPilots').innerHTML = humanPilots;
-      checkCreateHumanDispatcher();
-      }
-    });
     // Fly button click
     document.getElementById("flyButton").addEventListener("click", function() {
       money++;
     });
+    // Buy Human Pilot button click
+
+    function checkCreateHumanPilotButton() {
+      if (money >= 20 && document.getElementById('humanpilotbutton') == null) {
+        let createHumanPilotButton = document.createElement("BUTTON");
+        createHumanPilotButton.innerHTML = "Buy Human Pilot";
+        createHumanPilotButton.type = "button";
+        createHumanPilotButton.id = "humanpilotbutton";
+        createHumanPilotButton.title = "placeholder";
+        createHumanPilotButton.name = "humanpilotbutton";
+        document.getElementById('buttonContainer').appendChild(createHumanPilotButton);
+        let createHumanPilotH3 = document.createElement("H3");
+        createHumanPilotH3.innerHTML = "Human Pilots: <span id='displayedpilots'>" + humanPilots + "</span>";
+        document.getElementById('itemcounts').appendChild(createHumanPilotH3);
+        buyHumanPilotClick()
+      }
+    };
     function checkCreateHumanDispatcher() {
       if (humanPilots >= 1 && document.getElementById('humandispatcherbutton') == null) {
         let createHumanDispatcherButton = document.createElement("BUTTON");
         createHumanDispatcherButton.innerHTML = "Buy Human Dispatcher";
+        createHumanDispatcherButton.type = "button";
         createHumanDispatcherButton.id = "humandispatcherbutton";
+        createHumanDispatcherButton.title = "placeholder";
+        createHumanDispatcherButton.name = "humandispatcherbutton";
         document.getElementById('buttonContainer').appendChild(createHumanDispatcherButton);
+        let createHumanDispatcherH3 = document.createElement("H3");
+        createHumanDispatcherH3.innerHTML = "Human Dispatchers: <span id='displayeddispatchers'>" + humanDispatchers + "</span>";
+        document.getElementById('itemcounts').appendChild(createHumanDispatcherH3);
+        buyHumanDispatcherClick()
       }
     };
+    function buyHumanPilotClick() {
+      document.getElementById('humanpilotbutton').addEventListener("click", function(){
+        if (money >= humanPilotCost) {
+        humanPilots++;
+        money -= humanPilotCost;
+        humanPilotCost *= 1.1;
+        humanPilotCostDisplay = Math.floor(humanPilotCost);
+        document.getElementById("humanPilotButton").title = "Cost: " + humanPilotCostDisplay;
+        document.getElementById('currentPilots').innerHTML = humanPilots;
+        document.getElementById('displayeddispatchers').innerHTML = humanPilots;
+        checkCreateHumanDispatcher();
+      }
+    })
+  };
+    function buyHumanDispatcherClick() {
+      document.getElementById('humandispatcherbutton').addEventListener("click", function(){
+        humanDispatchers++;
+        document.getElementById('displayeddispatchers').innerHTML = humanDispatchers;
+      });
+    }
   </script>
 </html>

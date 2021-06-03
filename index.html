@@ -3,22 +3,28 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@300&display=swap" rel="stylesheet">
     <style media="screen">
       body {
         background-color: #5A5A5A;
         color:white;
+        font-family: 'Advent Pro', sans-serif;
       }
       button {
         margin:10px 10px 10px 0px;
         padding:1px 40px 1px 40px;
         border-radius: 5px;
-        background-color:
+        background-color: ;
+        font-family: 'Advent Pro', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
       }
     </style>
   </head>
   <body>
     <div class="Game" id="Game">
-      <h1>AstroLogistics</h1>
+      <h1>Astro Logistics</h1>
       <div class="" id="itemcounts">
         <h3 id="money">Money: <span id="currentmoney"></span></h3>
 
@@ -41,15 +47,18 @@
     window.setInterval(function () {
       money += humanPilots * 1/1000;
       moneyDisplay = Math.floor(money);
-      if (document.getElementById('humanpilotbutton')) {
-        document.getElementById('humanpilotbutton').disabled = (money < humanPilotCost) ? true : false;
-      }
+      disabledButtonCheck()
       currentMoney = document.getElementById('currentmoney');
       currentMoney.textContent = moneyDisplay;
       checkCreateHumanPilotButton();
     }, 10);
     // End Main loop
 
+    function disabledButtonCheck() {
+      if (document.getElementById('humanpilotbutton')) {
+        document.getElementById('humanpilotbutton').disabled = (money < humanPilotCost) ? true : false;
+      }
+    }
     // Fly button click
     document.getElementById("flyButton").addEventListener("click", function() {
       money++;

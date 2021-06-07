@@ -35,84 +35,96 @@
     </div>
   </body>
   <script type="text/javascript">
-    let money = 0;
-    let humanPilots = 0;
-    let humanPilotCost = 20;
-    let humanDispatchers = 0;
-    let humanDispatcherCost = 50;
-    let currentMoney;
-    let moneyRounded;
+  let money = 0;
+  let humanPilots = 0;
+  let humanPilotCost = 20;
+  let humanDispatchers = 0;
+  let humanDispatcherCost = 50;
+  let currentMoney;
+  let moneyRounded;
 
-    // Main Loop
-    window.setInterval(function () {
-      money += humanPilots * 1/1000;
-      moneyDisplay = Math.floor(money);
-      disabledButtonCheck()
-      currentMoney = document.getElementById('currentmoney');
-      currentMoney.textContent = moneyDisplay;
-      checkCreateHumanPilotButton();
-    }, 10);
-    // End Main loop
 
-    function disabledButtonCheck() {
-      if (document.getElementById('humanpilotbutton')) {
-        document.getElementById('humanpilotbutton').disabled = (money < humanPilotCost) ? true : false;
-      }
+  // Main Loop
+  window.setInterval(function () {
+    continuousDisplays();
+    disabledButtonCheck();
+    checkCreateHumanPilotButton();
+  }, 10);
+  // End Main loop
+
+  function continuousDisplays() {
+    money += (humanPilots * 1/1000) + (humanDispatchers * 1/800);
+    moneyDisplay = Math.floor(money);
+    currentMoney = document.getElementById('currentmoney');
+    currentMoney.textContent = moneyDisplay;
+  }
+  function disabledButtonCheck() {
+    if (document.getElementById('humanpilotbutton')) {
+      document.getElementById('humanpilotbutton').disabled = (money < humanPilotCost) ? true : false;
     }
-    // Fly button click
-    document.getElementById("flyButton").addEventListener("click", function() {
-      money++;
-    });
-    // Buy Human Pilot button click
+    if (document.getElementById('humandispatcherbutton')) {
+      document.getElementById('humandispatcherbutton').disabled = (money < humanDispatcherCost) ? true : false;
+    }
+  }
+  // Fly button click
+  document.getElementById("flyButton").addEventListener("click", function() {
+    money++;
+  });
+  // Buy Human Pilot button click
 
-    function checkCreateHumanPilotButton() {
-      if (money >= 20 && document.getElementById('humanpilotbutton') == null) {
-        let createHumanPilotButton = document.createElement("BUTTON");
-        createHumanPilotButton.innerHTML = "Buy Human Pilot";
-        createHumanPilotButton.type = "button";
-        createHumanPilotButton.id = "humanpilotbutton";
-        createHumanPilotButton.title = "placeholder";
-        createHumanPilotButton.name = "humanpilotbutton";
-        document.getElementById('buttonContainer').appendChild(createHumanPilotButton);
-        let createHumanPilotH3 = document.createElement("H3");
-        createHumanPilotH3.innerHTML = "Human Pilots: <span id='displayedpilots'>" + humanPilots + "</span>";
-        document.getElementById('itemcounts').appendChild(createHumanPilotH3);
-        buyHumanPilotClick()
-      }
-    };
-    function checkCreateHumanDispatcher() {
-      if (humanPilots >= 3 && document.getElementById('humandispatcherbutton') == null) {
-        let createHumanDispatcherButton = document.createElement("BUTTON");
-        createHumanDispatcherButton.innerHTML = "Buy Human Dispatcher";
-        createHumanDispatcherButton.type = "button";
-        createHumanDispatcherButton.id = "humandispatcherbutton";
-        createHumanDispatcherButton.title = "placeholder";
-        createHumanDispatcherButton.name = "humandispatcherbutton";
-        document.getElementById('buttonContainer').appendChild(createHumanDispatcherButton);
-        let createHumanDispatcherH3 = document.createElement("H3");
-        createHumanDispatcherH3.innerHTML = "Human Dispatchers: <span id='displayeddispatchers'>" + humanDispatchers + "</span>";
-        document.getElementById('itemcounts').appendChild(createHumanDispatcherH3);
-        buyHumanDispatcherClick()
-      }
-    };
-    function buyHumanPilotClick() {
-      document.getElementById('humanpilotbutton').addEventListener("click", function(){
-        if (money >= humanPilotCost) {
-        humanPilots++;
-        money -= humanPilotCost;
-        humanPilotCost *= 1.1;
-        humanPilotCostDisplay = Math.floor(humanPilotCost);
-        document.getElementById("humanpilotbutton").title = "Cost: " + humanPilotCostDisplay;
-        document.getElementById('displayedpilots').innerHTML = humanPilots;
-        checkCreateHumanDispatcher();
-      }
-    })
+  function checkCreateHumanPilotButton() {
+    if (money >= 20 && document.getElementById('humanpilotbutton') == null) {
+      let createHumanPilotButton = document.createElement("BUTTON");
+      createHumanPilotButton.innerHTML = "Buy Human Pilot";
+      createHumanPilotButton.type = "button";
+      createHumanPilotButton.id = "humanpilotbutton";
+      createHumanPilotButton.title = "placeholder";
+      createHumanPilotButton.name = "humanpilotbutton";
+      document.getElementById('buttonContainer').appendChild(createHumanPilotButton);
+      let createHumanPilotH3 = document.createElement("H3");
+      createHumanPilotH3.innerHTML = "Human Pilots: <span id='displayedpilots'>" + humanPilots + "</span>";
+      document.getElementById('itemcounts').appendChild(createHumanPilotH3);
+      buyHumanPilotClick()
+    }
   };
-    function buyHumanDispatcherClick() {
-      document.getElementById('humandispatcherbutton').addEventListener("click", function(){
-        humanDispatchers++;
-        document.getElementById('displayeddispatchers').innerHTML = humanDispatchers;
-      });
+  function checkCreateHumanDispatcher() {
+    if (humanPilots >= 3 && document.getElementById('humandispatcherbutton') == null) {
+      let createHumanDispatcherButton = document.createElement("BUTTON");
+      createHumanDispatcherButton.innerHTML = "Buy Human Dispatcher";
+      createHumanDispatcherButton.type = "button";
+      createHumanDispatcherButton.id = "humandispatcherbutton";
+      createHumanDispatcherButton.title = "placeholder";
+      createHumanDispatcherButton.name = "humandispatcherbutton";
+      document.getElementById('buttonContainer').appendChild(createHumanDispatcherButton);
+      let createHumanDispatcherH3 = document.createElement("H3");
+      createHumanDispatcherH3.innerHTML = "Human Dispatchers: <span id='displayeddispatchers'>" + humanDispatchers + "</span>";
+      document.getElementById('itemcounts').appendChild(createHumanDispatcherH3);
+      buyHumanDispatcherClick()
     }
-  </script>
+  };
+  function buyHumanPilotClick() {
+    document.getElementById('humanpilotbutton').addEventListener("click", function(){
+    if (money >= humanPilotCost) {
+      humanPilots++;
+      money -= humanPilotCost;
+      humanPilotCost *= 1.1;
+      humanPilotCostDisplay = Math.floor(humanPilotCost);
+      document.getElementById("humanpilotbutton").title = "Cost: " + humanPilotCostDisplay;
+      document.getElementById('displayedpilots').innerHTML = humanPilots;
+      checkCreateHumanDispatcher();
+    }
+  })
+};
+  function buyHumanDispatcherClick() {
+    document.getElementById('humandispatcherbutton').addEventListener("click", function(){
+    if(money >= humanDispatcherCost) {
+      humanDispatchers++;
+      money -= humanDispatcherCost;
+      humanDispatcherCost *= 1.15;
+      humanDispatcherCostDisplay = Math.floor(humanDispatcherCost);
+      document.getElementById('displayeddispatchers').innerHTML = humanDispatchers;
+    }
+  });
+}
+</script>
 </html>

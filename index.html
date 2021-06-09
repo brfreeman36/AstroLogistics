@@ -46,9 +46,9 @@
 
   // Main Loop
   window.setInterval(function () {
-    continuousDisplays();
-    disabledButtonCheck();
-    checkCreateHumanPilotButton();
+    continuousDisplays(); // Update numbers
+    disabledButtonCheck(); // Enable/Disable Buttons
+    checkCreateHumanPilotButton(); // Create Buy button if conditions met
   }, 10);
   // End Main loop
 
@@ -70,7 +70,6 @@
   document.getElementById("flyButton").addEventListener("click", function() {
     money++;
   });
-  // Buy Human Pilot button click
 
   function checkCreateHumanPilotButton() {
     if (money >= 20 && document.getElementById('humanpilotbutton') == null) {
